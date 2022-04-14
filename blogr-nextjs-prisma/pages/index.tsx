@@ -4,6 +4,15 @@ import Layout from "../components/Layout"
 import Post, { PostProps } from "../components/Post"
 import prisma from "../lib/prisma"
 
+/*
+Note: Once the app is deployed to production, 
+the feed will only ever be updated when the entire app is redeployed! 
+That's because you're using static site generation (SSG) 
+via getStaticProps to retrieve the data for this view. 
+If you want it to be updated "immediately", 
+consider changing getStaticProps togetServerSideProps or 
+using Incremental Static Regeneration.
+*/
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
     where: { published: true },

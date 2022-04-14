@@ -8,7 +8,17 @@ const Draft: React.FC = () => {
 
   const submitData = async (params: React.SyntheticEvent) => {
     params.preventDefault();
-    // TODO
+    try {
+      const body = { title, content };
+      await fetch('/api/post', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      await Router.push('/drafts');
+    } catch (error) {
+      console.error(error);      
+    }
   }
 
   return(
